@@ -1,6 +1,6 @@
 "use strict";
 
-var Accessory, Service, Characteristic, UUIDGen, Wiser, WiserSwitch, WiserDimmer, Homebridge;
+var Accessory, Service, Characteristic, UUIDGen, Wiser, WiserSwitch, WiserDimmer, WiserFan, Homebridge;
 
 module.exports = function(homebridge) {
 
@@ -11,6 +11,7 @@ module.exports = function(homebridge) {
   Homebridge = homebridge;
   WiserSwitch = require('./wiserswitch.js');
   WiserDimmer = require('./wiserdimmer.js');
+  WiserFan = require('./wiserfan.js');
   Wiser = require('./wiser.js');
 
   homebridge.registerPlatform('homebridge-platform-wiser', 'Wiser', WiserPlatform);
@@ -51,7 +52,9 @@ function WiserPlatform(log, config, api) {
       for (var key in wiser.wiserGroups) {
         var wiserswitch;
         var group = wiser.wiserGroups[key];
-        if (group.dimmable) {
+        if (group.type == 'fan') {
+          wiserswitch = new WiserFan(Homebridge, this.log, wiser, wiser.wiserGroups[key]);
+        } else if (group.dimmable) {
           wiserswitch = new WiserDimmer(Homebridge,this.log, wiser, wiser.wiserGroups[key]);
         } else {
           wiserswitch = new WiserSwitch(Homebridge,this.log, wiser, wiser.wiserGroups[key]);

@@ -74,6 +74,7 @@ Wiser.prototype.getProject = function (callback) {
 
           for (var i = 0; i < widgets.length; i++) {
             var params = widgets[i].params;
+            var type = widgets[i].$.type;
             var app = params[0].$.app;
             var ga = params[0].$.ga;
             var name = params[0].$.label;
@@ -82,7 +83,22 @@ Wiser.prototype.getProject = function (callback) {
               "undefined" != typeof ga &&
               "undefined" != typeof name) {
               var group = new WiserGroup(app, 254, ga, name);
-              group.dimmable = (widgets[i].$.type == '1');
+              switch (type) {
+                case '1':
+                  group.dimmable = true;
+                  group.type = 'dimmer';
+                  break;
+
+                case '31':
+                  group.dimmable = true;
+                  group.type = 'fan';
+                  break;
+
+                default:
+                  group.dimmable = false;
+                  group.type = 'switch';
+                  break;
+              }
               this.wiserGroups[ga] = group;
               this.namedGroups[group.name] = group;
             }

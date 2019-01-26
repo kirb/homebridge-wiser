@@ -10,6 +10,7 @@ var WiserGroup = function(app, network, groupAddress, name) {
   this.name = name;
   this.level = 0;
   this.dimmable = false;
+  this.type = '';
 }
 
 util.inherits(WiserGroup,EventEmitter);
