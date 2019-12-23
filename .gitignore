@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/homebridge-wiser-ben/config/applicationhost.config
+/.vs/homebridge-wiser-ben/v16/.suo
+/.vs
